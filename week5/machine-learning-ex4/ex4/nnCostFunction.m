@@ -62,23 +62,29 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+    X = [ones(m, 1) X]; %5000*401
+    z2 = X*Theta1.';%5000*25
+    a2 = sigmoid(z2);
+    n = size(a2,1);
+    
+    a2 = [ones(n,1) a2];
+    z3 = a2*Theta2.';
+    a3 = sigmoid(z3);
+    hx = a3;
+    Y = zeros(num_labels, m);
+    for i = 1:m
+       rowIndex = y(i);
+       temp = Y(:,i);
+       temp(rowIndex,1) = 1;
+       Y(:,i) = temp;
+    end
+    
+    temp0 = (Y.'.*(-1)).*log(hx);
+    temp1 = (Y.'.*(-1)+1).*log((hx).*(-1)+1);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    J = 1/m*sum(sum(temp0-temp1));
+    
+    
 
 % -------------------------------------------------------------
 
