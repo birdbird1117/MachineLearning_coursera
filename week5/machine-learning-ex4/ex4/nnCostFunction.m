@@ -84,6 +84,16 @@ Theta2_grad = zeros(size(Theta2));
 
     J = 1/m*sum(sum(temp0-temp1));
     
+    % remove bias
+    Theta1(:,1) = [];
+    Theta2(:,1) = [];
+
+    Theta1 = Theta1.^2;
+    Theta2 = Theta2.^2;
+    
+    % add regularization
+    J = J + lambda/2/m*(sum(sum(Theta1)) + sum(sum(Theta2)));
+    
     
 
 % -------------------------------------------------------------
