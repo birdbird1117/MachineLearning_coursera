@@ -93,7 +93,8 @@ Theta2_grad = zeros(size(Theta2));
     % add regularization
     J = J + lambda/2/m*(sum(sum(Theta1_power2)) + sum(sum(Theta2_power2)));
     
-    Delta3 = a3 - Y.'; %5000*10
+    
+    Delta3 = a3 - Y.'; %5000*10 % FIXME, why a smooth value - a discrete value?
     Delta2 = Delta3*Theta2.*sigmoidGradient(z2);
     %Delta2 = Delta2(2:end);
     %Delta1 = Theta1.'*Delta2.*sigmoidGradient(z1);
