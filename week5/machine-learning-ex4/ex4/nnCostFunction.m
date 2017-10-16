@@ -113,11 +113,15 @@ Theta2_grad = zeros(size(Theta2));
     Theta2_grad = 1/m*DELTA2;
     
 % -------------------------------------------------------------
-
+    Theta1_temp = Theta1_grad + lambda/m*Theta1;
+    Theta1_grad_regularization = Theta1_temp - lambda/m*Theta1(:,1);
+    Theta2_temp = Theta2_grad + lambda/m*Theta2;
+    Theta2_grad_regularization = Theta2_temp - lambda/m*Theta2(:,1);
 % =========================================================================
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
+grad = [Theta1_grad_regularization(:) ; Theta2_grad_regularization(:)];
 
 
 end
