@@ -82,29 +82,32 @@ Theta2_grad = zeros(size(Theta2));
     temp1 = (Y.'.*(-1)+1).*log((hx).*(-1)+1);
 
     J = 1/m*sum(sum(temp0-temp1));
+    
+    Theta1_without_bias = Theta1;
+    Theta2_without_bias = Theta2;
         
     % remove bias
-    Theta1(:,1) = [];
-    Theta2(:,1) = [];
+    Theta1_without_bias(:,1) = [];
+    Theta2_without_bias(:,1) = [];
 
-    Theta1_power2 = Theta1.^2;
-    Theta2_power2 = Theta2.^2;
+    Theta1_power2 = Theta1_without_bias.^2;
+    Theta2_power2 = Theta2_without_bias.^2;
     
     % add regularization
     J = J + lambda/2/m*(sum(sum(Theta1_power2)) + sum(sum(Theta2_power2)));
     
     
     Delta3 = a3 - Y.'; %5000*10 % FIXME, why a smooth value - a discrete value?
-    Delta2 = Delta3*Theta2.*sigmoidGradient(z2);
+    Delta2 = Delta3*Theta2_without_bias.*sigmoidGradient(z2); % 5000*25 the same as z2
     %Delta2 = Delta2(2:end);
     %Delta1 = Theta1.'*Delta2.*sigmoidGradient(z1);
     %Delta1 = Delta1(2:end);
-    DELTA1 = zeros(size(X.'*Delta2));
-    DELTA1 = DELTA1 + X.'*Delta2;
-    DELTA2 = zeros(size(a2.'*Delta3));
-    DELTA2 = DELTA2 + a2.'*Delta3;
+    DELTA1 = zeros(size(Delta2.'*X_1));
+    DELTA1 = DELTA1 + Delta2.'*X_1;
+    DELTA2 = zeros(size(Delta3.'*a2));
+    DELTA2 = DELTA2 + Delta3.'*a2;
     
-    DELTA2(1, :) = [];
+    %DELTA2(1, :) = [];
     
     Theta1_grad = 1/m*DELTA1;
     Theta2_grad = 1/m*DELTA2;
