@@ -24,11 +24,10 @@ sigma = 0.3;
 %
 
 vec = [0.01 0.03 0.1 0.3 1 3 10 30]; % vec should not be []'
-error = Inf;
+min_error = Inf;
 for i=vec
     for j=vec
         model = svmTrain(X, y, i, @(x1, x2) gaussianKernel(x1, x2, j));
-        min_error = error;
         predictions = svmPredict(model, Xval);
         error = mean(double(predictions ~= yval));
         if error < min_error
