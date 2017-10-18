@@ -26,12 +26,9 @@ theta_no_bias = theta;
 theta_no_bias(1) = 0;
 J = 1/(2*m)*sum(hx_y_power2) + lambda/2/m*sum(theta_no_bias.^2);
 
-
-
-
-
-
-
+grad = 1/m*(hx_y.'*X)+lambda/m*theta.';
+grad_temp = 1/m*(hx_y.'*X);
+grad(1) = grad_temp(1); 
 
 
 
