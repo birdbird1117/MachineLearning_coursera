@@ -23,8 +23,7 @@ idx = zeros(size(X,1), 1);
 for i = 1:size(X,1)
     xi = repmat(X(i,:), K, 1);
     distance = sum((xi-centroids).^2, 2);
-    [dummy,idxi] = min(distance);
-    idx(i) = idxi;
+    [dummy,idx(i)] = min(distance);
 end
 
 
